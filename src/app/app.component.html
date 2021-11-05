@@ -4,7 +4,7 @@
 
 
 
-<div class="p-6 space-y-6 flex items-center  flex-col">
+<div class="p-6 space-y-6 flex items-center  flex-col" [formGroup]="formGroup">
   <mat-card class="w-1/4">
     <mat-card-header>
       <mat-card-title>User form</mat-card-title>
@@ -13,29 +13,29 @@
       <div class="space-x-2">
         <mat-form-field appearance="fill">
           <mat-label>Firstname</mat-label>
-          <input matInput>
+          <input matInput formControlName="firstName">
         </mat-form-field>
         <mat-form-field appearance="fill">
           <mat-label>Lastname</mat-label>
-          <input matInput>
+          <input matInput formControlName="lastName">
         </mat-form-field>
       </div>
       <div>
         <mat-form-field appearance="fill">
           <mat-label>Phone</mat-label>
-          <input matInput>
+          <input matInput formControlName="phoneNumber">
         </mat-form-field>
       </div>
       <div>
         <mat-form-field appearance="fill">
           <mat-label>Email</mat-label>
-          <input matInput>
+          <input matInput formControlName="email">
         </mat-form-field>
       </div>
     </mat-card-content>
     <mat-card-actions align="end">
       <button mat-stroked-button>RESET</button>
-      <button mat-raised-button color="primary">SUBMIT</button>
+      <button mat-raised-button color="primary" (click)="submit()">SUBMIT</button>
     </mat-card-actions>
   </mat-card>
 
