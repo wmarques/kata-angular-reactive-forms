@@ -3,7 +3,6 @@
 </mat-toolbar>
 
 
-
 <div class="p-6 space-y-6 flex items-center  flex-col" [formGroup]="formGroup">
   <mat-card class="w-1/4">
     <mat-card-header>
@@ -33,9 +32,19 @@
         </mat-form-field>
       </div>
     </mat-card-content>
+    {{formGroup.get('phoneNumber').errors | json}}
+    <div *ngIf="formGroup.get('phoneNumber').errors.notUnique">
+      Numéro de téléphone déjà pris
+    </div>
+
     <mat-card-actions align="end">
       <button mat-stroked-button>RESET</button>
-      <button mat-raised-button color="primary" (click)="submit()">SUBMIT</button>
+      <button mat-raised-button color="primary"
+              [disabled]="formGroup.invalid"
+              (click)="submit()"
+      >
+        SUBMIT
+      </button>
     </mat-card-actions>
   </mat-card>
 

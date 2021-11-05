@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {of} from "rxjs";
-import {delay} from "rxjs/operators";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {delay, map} from "rxjs/operators";
+import {AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -15,18 +15,30 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.formGroup = this.fb.group({
-      firstName: [''],
-      lastName: [''],
-      email: [''],
-      phoneNumber: [''],
+      firstName: ['', [Validators.required, Validators.maxLength(50)]],
+      lastName: ['', [Validators.required, Validators.maxLength(50)]],
+      email: ['', [Validators.required, Validators.email]],
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\d+$/),], [this.phoneUniqueValidator]],
     });
   }
 
-  validatePhone() {
-    return of(true).pipe(delay(1000))
+  get emailForm() {
+    return this.formGroup.get('email');
   }
 
   submit() {
     console.log(this.formGroup.value);
   }
+
+  phoneUniqueValidator(control) {
+    return of(false).pipe(
+      delay(500),
+      map(isPhoneUnique => {
+        return isPhoneUnique ? null : {notUnique: true}
+      })
+    );
+  }
 }
+
+
+
